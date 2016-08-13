@@ -10,3 +10,161 @@ public class Tutionaire {
               Frame1 f1=new Frame1();
     }
 }
+
+package frame1;
+
+import java.awt.Frame;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import javax.swing.JButton;
+import frame2.*;
+
+public class Frame1 extends Frame implements ActionListener{
+      JButton b1=new JButton("Student Login");
+      JButton b2=new JButton("Teacher Login");
+      boolean status;
+          
+      public Frame1(){
+          b1.setBounds(150,100,200,50);
+          b2.setBounds(150,200,200,50);
+          setSize(500,500);
+          setVisible(true);
+          setLayout(null);
+          add(b1);
+          add(b2);
+          b1.addActionListener(this);
+          b2.addActionListener(this);
+          addWindowListener(new WindowAdapter(){
+            public void windowClosing(WindowEvent we){
+                System.exit(0);
+            }
+        });
+      }
+      public void actionPerformed(ActionEvent e){
+          if(e.getSource().equals(b1)){
+              status=true;
+          }
+          else if(e.getSource().equals(b2)){
+              status=false;
+          }
+          Frame2 f2=new Frame2();
+      }
+  }
+
+package frame2;
+
+import java.awt.Frame;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import frame3.*; 
+
+public class Frame2 extends Frame implements ActionListener{
+      JLabel l1=new JLabel("username");
+      JLabel l2=new JLabel("password");
+      JTextField tf1=new JTextField();
+      JTextField tf2=new JTextField(); 
+      JButton b2=new JButton(" forgot password?");
+      JButton b1=new JButton("NEW USER");
+      JButton b3=new JButton("Login");
+      public Frame2(){
+              l1.setBounds(150,100,200,50);
+              l2.setBounds(150,150,200,50);
+              tf1.setBounds(250,120,130,20);
+              tf2.setBounds(250,170,130,20);
+          b2.setBounds(300,270,150,30);
+          b1.setBounds(80,270,150,30);
+          b3.setBounds(225,220,80,30);
+          setSize(500,500);
+          setVisible(true);
+          setLayout(null);
+          add(l1);
+          add(l2);
+          add(tf1);
+          add(tf2);
+          add(b1);
+          add(b2);
+          add(b3);
+          b1.addActionListener(this);
+          
+          addWindowListener(new WindowAdapter(){
+            public void windowClosing(WindowEvent we){
+                dispose();
+            }
+        });
+      }
+      @Override
+      public void actionPerformed(ActionEvent e){
+         if(e.getSource().equals(b1)){
+              Frame3 f3=new Frame3();
+         }
+        
+      }
+}
+
+package frame3;
+
+import java.awt.Frame;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+
+public class Frame3 extends Frame implements ActionListener{
+      JLabel l1=new JLabel("email id");
+      JLabel l2=new JLabel("password");
+      JLabel l3=new JLabel("confirm password");
+      JLabel l4=new JLabel("Enter OTP");
+      JTextField tf1=new JTextField();
+      JTextField tf2=new JTextField(); 
+      JTextField tf3=new JTextField();
+      JTextField tf4=new JTextField();      
+      JButton b2=new JButton(" Submit");
+      JButton b1=new JButton("Sent OTP");
+      
+          
+      public Frame3(){
+          l1.setBounds(150,100,200,50);
+          l2.setBounds(150,150,200,50);
+          l3.setBounds(120,200,200,50);
+          l4.setBounds(150,300,200,50);
+          tf1.setBounds(250,120,130,20);
+          tf2.setBounds(250,170,130,20);
+          tf3.setBounds(250,220,130,20);
+          tf4.setBounds(250,320,130,20);
+          b1.setBounds(200,250,100,30);
+          b2.setBounds(200,350,100,30);
+          
+          setSize(500,500);
+          setVisible(true);
+          setLayout(null);
+          add(l1);
+          add(l2);
+          add(l3);
+          add(l4);
+          add(tf1);
+          add(tf2);
+          add(tf3);
+          add(tf4);
+          add(b1);
+          add(b2);
+          addWindowListener(new WindowAdapter(){
+              @Override
+            public void windowClosing(WindowEvent we){
+                dispose();
+            }
+        });
+      }
+      @Override
+      public void actionPerformed(ActionEvent e){
+          }
+      }
