@@ -2,7 +2,6 @@
 package tutionaire;
 
 import frame1.*;
-import frame2.*;
 
 public class Tutionaire {
 
@@ -53,6 +52,7 @@ public class Frame1 extends Frame implements ActionListener{
       }
   }
 
+
 package frame2;
 
 import java.awt.Frame;
@@ -93,11 +93,7 @@ public class Frame2 extends Frame implements ActionListener{
           add(b3);
           b1.addActionListener(this);
           
-          addWindowListener(new WindowAdapter(){
-            public void windowClosing(WindowEvent we){
-                dispose();
-            }
-        });
+         
       }
       @Override
       public void actionPerformed(ActionEvent e){
@@ -107,6 +103,7 @@ public class Frame2 extends Frame implements ActionListener{
         
       }
 }
+
 
 package frame3;
 
@@ -118,6 +115,7 @@ import java.awt.event.WindowEvent;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import sendMail.Mail;
 
 public class Frame3 extends Frame implements ActionListener{
       JLabel l1=new JLabel("email id");
@@ -157,14 +155,76 @@ public class Frame3 extends Frame implements ActionListener{
           add(tf4);
           add(b1);
           add(b2);
-          addWindowListener(new WindowAdapter(){
-              @Override
-            public void windowClosing(WindowEvent we){
-                dispose();
-            }
-        });
+          b1.addActionListener(this);
       }
       @Override
       public void actionPerformed(ActionEvent e){
+          if(e.getSource().equals(b1)){
+              String[] userMail={tf1.getText()};
+              Mail m=new Mail();
+              m.sendFromGMail("smg3397","encyclopedias",userMail,"OTP","1234");
           }
       }
+}
+
+package sendMail;
+
+import java.util.*;
+import javax.mail.*;
+import javax.mail.internet.*;
+
+ public class Mail {
+
+public void sendFromGMail(String from, String pass, String[] to, String subject, String body) {
+    Properties props = System.getProperties();
+  String host = "smtp.gmail.com";
+
+    props.put("mail.smtp.starttls.enable", "true");
+
+    props.put("mail.smtp.ssl.trust", host);
+    props.put("mail.smtp.user", from);
+    props.put("mail.smtp.password", pass);
+    props.put("mail.smtp.port", "587");
+    props.put("mail.smtp.auth", "true");
+
+
+    Session session = Session.getDefaultInstance(props);
+    MimeMessage message = new MimeMessage(session);
+
+    try {
+
+
+        message.setFrom(new InternetAddress(from));
+        InternetAddress[] combo = new InternetAddress[to.length];
+
+        // To get the array of addresses
+        for( int i = 0; i < to.length; i++ ) {
+            combo[i] = new InternetAddress(to[i]);
+        }
+
+        for( int i = 0; i < combo.length; i++) {
+            message.addRecipient(Message.RecipientType.TO, combo[i]);
+        }
+
+
+
+        message.setSubject(subject);
+        message.setText(body);
+
+
+        Transport transport = session.getTransport("smtp");
+
+
+        transport.connect(host, from, pass);
+        transport.sendMessage(message, message.getAllRecipients());
+        transport.close();
+
+    }
+    catch (AddressException ae) {
+        ae.printStackTrace();
+    }
+    catch (MessagingException me) {
+        me.printStackTrace();
+    }
+    }
+}
