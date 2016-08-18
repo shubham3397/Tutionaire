@@ -9,18 +9,17 @@ public class Tutionaire {
               Frame1 f1=new Frame1();
     }
 }
-
 package frame1;
 
-import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.JButton;
 import frame2.*;
+import javax.swing.JFrame;
 
-public class Frame1 extends Frame implements ActionListener{
+public class Frame1 extends JFrame implements ActionListener{
       JButton b1=new JButton("Student Login");
       JButton b2=new JButton("Teacher Login");
       boolean status;
@@ -52,10 +51,8 @@ public class Frame1 extends Frame implements ActionListener{
       }
   }
 
-
 package frame2;
 
-import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -64,8 +61,9 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import frame3.*; 
+import javax.swing.JFrame;
 
-public class Frame2 extends Frame implements ActionListener{
+public class Frame2 extends JFrame implements ActionListener{
       JLabel l1=new JLabel("username");
       JLabel l2=new JLabel("password");
       JTextField tf1=new JTextField();
@@ -104,24 +102,25 @@ public class Frame2 extends Frame implements ActionListener{
       }
 }
 
-
 package frame3;
 
-import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-import sendMail.Mail;
+import sendMail.*;
 
-public class Frame3 extends Frame implements ActionListener{
+public class Frame3 extends JFrame implements ActionListener{
+      generateOtp g=new generateOtp();
       JLabel l1=new JLabel("email id");
       JLabel l2=new JLabel("password");
       JLabel l3=new JLabel("confirm password");
       JLabel l4=new JLabel("Enter OTP");
+      JLabel l5=new JLabel("You are now a member of TUTIONAIRE");
       JTextField tf1=new JTextField();
       JTextField tf2=new JTextField(); 
       JTextField tf3=new JTextField();
@@ -136,6 +135,7 @@ public class Frame3 extends Frame implements ActionListener{
           l3.setBounds(120,200,200,50);
           l4.setBounds(150,300,200,50);
           tf1.setBounds(250,120,130,20);
+          l5.setBounds(150,400,300,50);
           tf2.setBounds(250,170,130,20);
           tf3.setBounds(250,220,130,20);
           tf4.setBounds(250,320,130,20);
@@ -156,17 +156,29 @@ public class Frame3 extends Frame implements ActionListener{
           add(b1);
           add(b2);
           b1.addActionListener(this);
+          b2.addActionListener(this);
+          
       }
       @Override
       public void actionPerformed(ActionEvent e){
+          Mail m=new Mail();
+          String OTP=g.generator();
           if(e.getSource().equals(b1)){
               String[] userMail={tf1.getText()};
-              Mail m=new Mail();
-              m.sendFromGMail("smg3397","encyclopedias",userMail,"OTP","1234");
+              m.sendFromGMail("smg3397","encyclopedias",userMail,"OTP",OTP);
+          }
+          else if(e.getSource().equals(b2)){
+              if(OTP.equals(tf4.getText())){
+                  System.out.println("working....");
+                  add(l5);
+                  setVisible(true);
+              }
+              else{
+                  
+              }
           }
       }
 }
-
 package sendMail;
 
 import java.util.*;
@@ -228,3 +240,17 @@ public void sendFromGMail(String from, String pass, String[] to, String subject,
     }
     }
 }
+
+package sendMail;
+
+import java.util.Random;
+
+public class generateOtp {
+     Random r=new Random();
+     int rNum=1000+r.nextInt(10000-1000);
+     
+     public String generator(){
+          return Integer.toString(rNum);
+     }
+}
+
